@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "NerdLauncherActivity"
 
-// TODO : When I come back, i will start from page 451 going through it and then go to "Creating Explicit Intents at Runtime"
+// todo - When I come back, I will go to "Tasks and the Back Stack"
 class NerdLauncherActivity : AppCompatActivity() {
 
     private lateinit var recyclerView : RecyclerView
@@ -48,10 +48,14 @@ class NerdLauncherActivity : AppCompatActivity() {
         recyclerView.adapter = ActivityAdapter(activities)  // connecting our recyclerView to our adapter
     }
 
-    private class ActivityHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    private class ActivityHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val nameTextView = itemView as TextView
         private lateinit var resolveInfo : ResolveInfo
+
+        init {
+            nameTextView.setOnClickListener(this)
+        }
 
         // This will display and store the activity's label
         fun bindActivity(resolveInfo: ResolveInfo) {
@@ -60,6 +64,18 @@ class NerdLauncherActivity : AppCompatActivity() {
             val appName = resolveInfo.loadLabel(packageManager).toString()
             nameTextView.text = appName
         }
+
+        override fun onClick(view: View) {
+            val activityInfo = resolveInfo.activityInfo
+
+            val intent = Intent(Intent.ACTION_MAIN).apply {
+                setClassName(activityInfo.applicationInfo.packageName,
+                activityInfo.name)
+            }
+            val context = view.context
+            context.startActivity(intent)
+        }
+
     }
 
     private class ActivityAdapter(val activities: List<ResolveInfo>):
