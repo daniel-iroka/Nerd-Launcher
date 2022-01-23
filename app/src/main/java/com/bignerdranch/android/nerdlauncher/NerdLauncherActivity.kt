@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "NerdLauncherActivity"
 
-// todo - When I come back, I will go to "Tasks and the Back Stack"
+
 class NerdLauncherActivity : AppCompatActivity() {
 
     private lateinit var recyclerView : RecyclerView
@@ -71,11 +71,12 @@ class NerdLauncherActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_MAIN).apply {
                 setClassName(activityInfo.applicationInfo.packageName,
                 activityInfo.name)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             val context = view.context
             context.startActivity(intent)
         }
-
+        
     }
 
     private class ActivityAdapter(val activities: List<ResolveInfo>):
