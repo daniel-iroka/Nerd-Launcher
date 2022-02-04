@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,13 +49,15 @@ class NerdLauncherActivity : AppCompatActivity() {
         recyclerView.adapter = ActivityAdapter(activities)  // connecting our recyclerView to our adapter
     }
 
-    private class ActivityHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    private class ActivityHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        private val nameTextView = itemView as TextView
+        private val appNameTextView: TextView = itemView.findViewById(R.id.app_nameTextView)
+        private val appNameIcon: ImageView = itemView.findViewById(R.id.app_imageView)
+
         private lateinit var resolveInfo : ResolveInfo
 
         init {
-            nameTextView.setOnClickListener(this)
+            itemView.setOnClickListener(this)
         }
 
         // This will display and store the activity's label
@@ -62,7 +65,10 @@ class NerdLauncherActivity : AppCompatActivity() {
             this.resolveInfo = resolveInfo
             val packageManager = itemView.context.packageManager
             val appName = resolveInfo.loadLabel(packageManager).toString()
-            nameTextView.text = appName
+            val appIcon = resolveInfo.loadIcon(packageManager)
+
+            appNameTextView.text = appName
+            appNameIcon.setImageDrawable(appIcon)
         }
 
         override fun onClick(view: View) {
@@ -83,7 +89,7 @@ class NerdLauncherActivity : AppCompatActivity() {
             RecyclerView.Adapter<ActivityHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+            val view = layoutInflater.inflate(R.layout.new_nerd_launcher_activity, parent, false)
             return ActivityHolder(view)
         }
 
