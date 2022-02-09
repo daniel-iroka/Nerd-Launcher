@@ -17,12 +17,13 @@ private const val TAG = "NerdLauncherActivity"
 
 
 class NerdLauncherActivity : AppCompatActivity() {
-
     private lateinit var recyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nerd_launcher)
+
+        supportActionBar?.setTitle(R.string.apps_list_textView) // might just change our ActionBar. I don't know...
 
         recyclerView = findViewById(R.id.app_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
