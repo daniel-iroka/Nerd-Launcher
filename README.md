@@ -8,4 +8,4 @@ NerdLauncher is an App that uses implicit intent to replace the Android's defaul
 
 ## Screenshots
 
-<img src="Picture.png" width=400>
+<img src="" width=400>
